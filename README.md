@@ -1,4 +1,4 @@
 # React + TypeScript + Vite
 
 ## Run project
-````npm run dev```
+npm run dev
