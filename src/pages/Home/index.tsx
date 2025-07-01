@@ -1,5 +1,108 @@
+import brasao from "../../assets/brasao3_horizontal_branco.svg";
+import SearchBar from "../../components/searchBar";
+import { useState } from "react";
+import SalaCard, { type SalaCardProps } from "../../templates/SalaCard";
+
+const salas: SalaCardProps[] = [
+  {
+    numeroSala: "101",
+    nomeBloco: "A",
+    capacidade: 30,
+    disponibilidade: "Disponível à tarde",
+    status: "disponível",
+  },
+  {
+    numeroSala: "102",
+    nomeBloco: "B",
+    capacidade: 40,
+    disponibilidade: "Ocupada até 16h",
+    status: "ocupada",
+  },
+  {
+    numeroSala: "201",
+    nomeBloco: "C",
+    capacidade: 50,
+    disponibilidade: "Disponível manhã",
+    status: "disponível",
+  },
+  {
+    numeroSala: "305",
+    nomeBloco: "D",
+    capacidade: 35,
+    disponibilidade: "Ocupada o dia todo",
+    status: "ocupada",
+  },
+  {
+    numeroSala: "403",
+    nomeBloco: "A",
+    capacidade: 45,
+    disponibilidade: "Disponível agora",
+    status: "disponível",
+  },
+  {
+    numeroSala: "502",
+    nomeBloco: "B",
+    capacidade: 25,
+    disponibilidade: "Disponível à noite",
+    status: "disponível",
+  },
+];
+
 const Home = () => {
-  return <div></div>;
+  const [activeTab, setActiveTab] = useState<
+    "todas" | "disponiveis" | "ocupadas"
+  >("todas");
+
+  const salasFiltradas = salas.filter((sala) => {
+    if (activeTab === "disponiveis") return sala.status === "disponível";
+    if (activeTab === "ocupadas") return sala.status === "ocupada";
+    return true;
+  });
+
+  return (
+    <div className="pb-28">
+      <div className="relative flex py-24 w-full h-28 items-center justify-center bg-primary">
+        <img
+          src={brasao}
+          alt="Brasão da UFC"
+          className="w-28 sm:w-32 md:w-36 lg:w-56 mb-6"
+        />
+
+        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-6 w-full px-4 sm:px-0">
+          <SearchBar />
+        </div>
+
+        <div className="h-16" />
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto mt-20 px-4">
+        <div className="flex justify-start gap-x-6 border-b border-gray-200">
+          {[
+            { id: "todas", label: "Todas", count: 31 },
+            { id: "disponiveis", label: "Disponíveis", count: 15 },
+            { id: "ocupadas", label: "Ocupadas", count: 16 },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              className={`pb-2 border-b-4 transition-all duration-200 ${
+                activeTab === tab.id
+                  ? "border-primary text-gray-950 font-medium text-sm"
+                  : "border-transparent text-gray-500 hover:text-gray-700 text-sm"
+              }`}
+              onClick={() => setActiveTab(tab.id as typeof activeTab)}
+            >
+              {tab.label} ({tab.count})
+            </button>
+          ))}
+        </div>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {salasFiltradas.map((sala, index) => (
+            <SalaCard key={index} {...sala} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

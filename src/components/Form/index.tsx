@@ -1,7 +1,7 @@
 import classNames from "../../utils/classNames";
 import type { FormEventHandler, JSX } from "react";
-import Field from "./Field";
-import InputText from "./InputText";
+import Field from "./field";
+import InputText from "./inputText";
 
 type propsFormulario = {
   className?: string;

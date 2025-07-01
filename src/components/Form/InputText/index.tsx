@@ -4,7 +4,7 @@ import type {
   UseFormSetValue,
 } from "react-hook-form";
 import type { typeSelectOptions } from "../../../types/select.d";
-import Field, { type propsField } from "../Field";
+import Field, { type propsField } from "../field";
 import classNames from "../../../utils/classNames";
 import type { JSX } from "react";
 import copyToClipboard from "../../../utils/copyToClipboard";

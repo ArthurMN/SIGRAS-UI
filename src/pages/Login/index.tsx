@@ -1,4 +1,4 @@
-import Formulario from "../../components/Form";
+import Formulario from "../../components/form";
 import brasao from "../../assets/brasao3_horizontal_branco.svg";
 import { useState } from "react";
 import { CiCircleAlert, CiCircleCheck } from "react-icons/ci";
@@ -14,12 +14,12 @@ type FormData = {
 const Login = () => {
   const [primeiroAcesso, setPrimeiroAcesso] = useState<boolean>(false);
   const {
-    control,
+    // control,
     handleSubmit,
     watch,
     reset,
     register,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
       email: "",
