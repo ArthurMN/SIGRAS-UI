@@ -1,5 +1,6 @@
 import LayoutDashboard from "../layouts/LayoutDashboard";
 import Home from "../pages/Home";
+import MinhasReservas from "../pages/MinhasReservas";
 import Solicitacoes from "../pages/Solicitacoes";
 
 const pageRoutes = {
@@ -15,6 +16,11 @@ const pageRoutes = {
     {
       path: "/solicitacoes",
       element: <Solicitacoes />,
+      children: [],
+    },
+    {
+      path: "/minhas-reservas",
+      element: <MinhasReservas />,
       children: [],
     },
   ],

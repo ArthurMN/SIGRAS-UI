@@ -6,44 +6,44 @@ import ModalAgendamento from "../../modals/modalAgendamento";
 
 const salas: SalaCardProps[] = [
   {
-    numeroSala: "101",
-    nomeBloco: "A",
-    capacidade: 30,
+    numeroSala: "01",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
     disponibilidade: "Disponível à tarde",
     status: "disponível",
   },
   {
-    numeroSala: "102",
-    nomeBloco: "B",
-    capacidade: 40,
+    numeroSala: "02",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
     disponibilidade: "Ocupada até 16h",
     status: "ocupada",
   },
   {
-    numeroSala: "201",
-    nomeBloco: "C",
+    numeroSala: "03",
+    nomeBloco: "Bloco das engenharias",
     capacidade: 50,
     disponibilidade: "Disponível manhã",
     status: "disponível",
   },
   {
-    numeroSala: "305",
-    nomeBloco: "D",
-    capacidade: 35,
+    numeroSala: "04",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
     disponibilidade: "Ocupada o dia todo",
     status: "ocupada",
   },
   {
-    numeroSala: "403",
-    nomeBloco: "A",
-    capacidade: 45,
+    numeroSala: "05",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
     disponibilidade: "Disponível agora",
     status: "disponível",
   },
   {
-    numeroSala: "502",
-    nomeBloco: "B",
-    capacidade: 25,
+    numeroSala: "06",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
     disponibilidade: "Disponível à noite",
     status: "disponível",
   },
@@ -61,6 +61,14 @@ const Home = () => {
     if (activeTab === "disponiveis") return sala.status === "disponível";
     if (activeTab === "ocupadas") return sala.status === "ocupada";
     return true;
+  });
+
+  const salasDisponiveis = salas.filter((sala) => {
+    return sala.status === "disponível";
+  });
+
+  const salasOcupadas = salas.filter((sala) => {
+    return sala.status === "ocupada";
   });
 
   const handleAgendar = (sala: SalaCardProps) => {
@@ -93,9 +101,13 @@ const Home = () => {
       <div className="w-full max-w-6xl mx-auto mt-20 px-4">
         <div className="flex justify-start gap-x-6 border-b border-gray-200">
           {[
-            { id: "todas", label: "Todas", count: 31 },
-            { id: "disponiveis", label: "Disponíveis", count: 15 },
-            { id: "ocupadas", label: "Ocupadas", count: 16 },
+            { id: "todas", label: "Todas", count: salas.length },
+            {
+              id: "disponiveis",
+              label: "Disponíveis",
+              count: salasDisponiveis.length,
+            },
+            { id: "ocupadas", label: "Ocupadas", count: salasOcupadas.length },
           ].map((tab) => (
             <button
               key={tab.id}
