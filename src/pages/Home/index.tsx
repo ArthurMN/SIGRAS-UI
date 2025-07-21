@@ -2,6 +2,7 @@ import brasao from "../../assets/brasao3_horizontal_branco.svg";
 import SearchBar from "../../components/searchBar";
 import { useState } from "react";
 import SalaCard, { type SalaCardProps } from "../../templates/SalaCard";
+import ModalAgendamento from "../../modals/modalAgendamento";
 
 const salas: SalaCardProps[] = [
   {
@@ -53,11 +54,25 @@ const Home = () => {
     "todas" | "disponiveis" | "ocupadas"
   >("todas");
 
+  const [selectedSala, setSelectedSala] = useState<SalaCardProps | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const salasFiltradas = salas.filter((sala) => {
     if (activeTab === "disponiveis") return sala.status === "disponível";
     if (activeTab === "ocupadas") return sala.status === "ocupada";
     return true;
   });
+
+  const handleAgendar = (sala: SalaCardProps) => {
+    setSelectedSala(sala);
+    console.log("Click");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedSala(null);
+  };
 
   return (
     <div className="pb-28">
@@ -97,10 +112,25 @@ const Home = () => {
         </div>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {salasFiltradas.map((sala, index) => (
-            <SalaCard key={index} {...sala} />
+            <SalaCard
+              key={index}
+              {...sala}
+              onClick={() => handleAgendar(sala)}
+            />
           ))}
         </div>
       </div>
+
+      {selectedSala && (
+        <ModalAgendamento
+          sala={selectedSala}
+          open={isModalOpen}
+          onOpenChange={(open) => {
+            setIsModalOpen(open);
+            if (!open) setSelectedSala(null);
+          }}
+        />
+      )}
     </div>
   );
 };

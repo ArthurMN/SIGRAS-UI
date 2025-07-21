@@ -1,5 +1,6 @@
 import LayoutDashboard from "../layouts/LayoutDashboard";
 import Home from "../pages/Home";
+import Solicitacoes from "../pages/Solicitacoes";
 
 const pageRoutes = {
   path: "/",
@@ -9,6 +10,11 @@ const pageRoutes = {
     {
       path: "/",
       element: <Home />,
+      children: [],
+    },
+    {
+      path: "/solicitacoes",
+      element: <Solicitacoes />,
       children: [],
     },
   ],

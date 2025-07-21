@@ -1,4 +1,9 @@
-import { FaCircle, FaMapMarkerAlt, FaUsers, FaRegCalendarAlt } from "react-icons/fa";
+import {
+  FaCircle,
+  FaMapMarkerAlt,
+  FaUsers,
+  FaRegCalendarAlt,
+} from "react-icons/fa";
 import { MdSlideshow } from "react-icons/md";
 
 export type SalaCardProps = {
@@ -6,6 +11,7 @@ export type SalaCardProps = {
   nomeBloco: string;
   capacidade: number;
   disponibilidade: string;
+  onClick?: () => void;
   status: "disponível" | "ocupada";
 };
 
@@ -15,8 +21,10 @@ const SalaCard = ({
   capacidade,
   disponibilidade,
   status,
+  onClick,
 }: SalaCardProps) => {
-  const statusColor = status === "disponível" ? "text-green-500" : "text-red-500";
+  const statusColor =
+    status === "disponível" ? "text-green-500" : "text-red-500";
 
   return (
     <div className="bg-white shadow-md rounded-xl p-4 w-full max-w-md">
@@ -40,7 +48,10 @@ const SalaCard = ({
         <span>{disponibilidade}</span>
       </div>
 
-      <button className="flex w-full items-center justify-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+      <button
+        onClick={() => onClick?.()}
+        className="flex w-full items-center justify-center gap-2 bg-primary text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+      >
         <FaRegCalendarAlt />
         Agendar
       </button>

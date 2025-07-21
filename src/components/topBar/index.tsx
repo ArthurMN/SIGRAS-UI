@@ -1,7 +1,9 @@
 import { BsFillCalendarCheckFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
-import { FiBell, FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
+import NotificacaoPopover from "../notificacoesPopover";
+import { Home, List } from "lucide-react";
 
 export type UserType = {
   nome: string;
@@ -13,6 +15,33 @@ type TopbarProps = {
   usuario?: UserType;
 };
 
+const notificacoesExemplo = [
+  {
+    status: true,
+    sala: 101,
+    codigo: "ABC123",
+    data: "21/07/2025 10:30",
+  },
+  {
+    status: false,
+    sala: 202,
+    codigo: "XYZ789",
+    data: "20/07/2025 14:45",
+  },
+  {
+    status: true,
+    sala: 305,
+    codigo: "JKL456",
+    data: "19/07/2025 09:00",
+  },
+  {
+    status: false,
+    sala: 404,
+    codigo: "DEF321",
+    data: "18/07/2025 16:15",
+  },
+];
+
 const Topbar = ({ usuario }: TopbarProps) => {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -20,7 +49,7 @@ const Topbar = ({ usuario }: TopbarProps) => {
   };
 
   return (
-    <header className="w-full bg-white shadow flex justify-center">
+    <header className="w-full bg-white border-b border-b-gray-200 shadow flex justify-center">
       <div className="w-full max-w-6xl px-4 py-3 flex justify-between items-center">
         {usuario ? (
           // Conteúdo logado
@@ -46,19 +75,26 @@ const Topbar = ({ usuario }: TopbarProps) => {
 
             {/* DIREITA: Ações */}
             <div className="flex items-center gap-4">
-              <button
-                type="button"
-                title="Notificações"
-                className="p-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+              <Link
+                to="/"
+                className="flex items-center border border-gray-300 rounded-lg p-2 hover:bg-gray-100 hover: transition"
               >
-                <FiBell className="w-4 h-4 text-gray-600" />
-              </button>
+                <Home className="w-4 h-4 text-gray-600" />
+              </Link>
+              <NotificacaoPopover notificacoes={notificacoesExemplo} />
               <Link
                 to="/minhas-reservas"
                 className="flex items-center border border-gray-300 rounded-lg px-3 py-2 gap-2 text-xs text-gray-950 hover:bg-gray-100 hover: transition"
               >
                 <BsFillCalendarCheckFill className="w-4 h-4 text-gray-600" />
                 Minhas reservas
+              </Link>
+              <Link
+                to="/solicitacoes"
+                className="flex items-center border border-gray-300 rounded-lg px-3 py-2 gap-2 text-xs text-gray-950 hover:bg-gray-100 hover: transition"
+              >
+                <List className="w-4 h-4 text-gray-600" />
+                Solicitações
               </Link>
               <button
                 type="button"
