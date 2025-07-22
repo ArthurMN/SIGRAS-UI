@@ -1,5 +1,13 @@
 import Select from "react-select";
 import { BiSearch } from "react-icons/bi";
+import DatePicker from "react-datepicker";
+import { registerLocale } from 'react-datepicker';
+import {ptBR}from 'date-fns/locale/pt-BR';
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+
+registerLocale('pt-BR', ptBR);
+
 
 const customStyles = {
   control: (provided: any) => ({
@@ -48,26 +56,25 @@ const optionsTipoSala = [
   { value: "sala_reuniao", label: "Sala de Reunião" },
 ];
 
-const optionsData = [
-  { value: "hoje", label: "Hoje" },
-  { value: "amanha", label: "Amanhã" },
-  { value: "proxima_semana", label: "Próxima semana" },
-];
-
 const optionsHorario = [
-  { value: "manha", label: "Manhã (08h - 12h)" },
-  { value: "tarde", label: "Tarde (13h - 17h)" },
-  { value: "noite", label: "Noite (18h - 22h)" },
+  { value: "08:00 - 10:00", label: "08:00 - 10:00)" },
+  { value: "10:00 - 12:00", label: "10:00 - 12:00" },
+  { value: "12:00 - 13:30", label: "12:00 - 13:30" },
+  { value: "12:00 - 13:30", label: "13:30 - 15:30" },
+  { value: "12:00 - 13:30", label: "15:30 - 17:30" },
+  { value: "12:00 - 13:30", label: "18:00 - 20:00" },
 ];
 
 const optionsAlunos = [
   { value: "10", label: "Até 10 alunos" },
   { value: "20", label: "Até 20 alunos" },
   { value: "30", label: "Até 30 alunos" },
-  { value: "mais30", label: "Mais de 30 alunos" },
+  { value: "30mais", label: "Mais de 30 alunos" },
 ];
 
 const SearchBar = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
   return (
     <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden flex flex-wrap sm:flex-nowrap items-end gap-4 py-2 px-4">
       {/* Filtro: Tipo de sala */}
@@ -85,12 +92,13 @@ const SearchBar = () => {
       {/* Select 2 */}
       <div className="flex flex-col flex-1 min-w-[150px]">
         <span className="text-xs text-gray-400">Para quando?</span>
-        <Select
-          options={optionsData}
-          placeholder="Insira as datas"
-          styles={customStyles}
-          menuPortalTarget={document.body}
-          menuPosition="absolute"
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          placeholderText="Insira as datas"
+          dateFormat="dd/MM/yyyy"
+          locale="pt-BR"
+          className="w-full outline-none placeholder-gray-800"
         />
       </div>
 

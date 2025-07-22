@@ -4,7 +4,7 @@ import {
   FaUsers,
   FaRegCalendarAlt,
 } from "react-icons/fa";
-import { MdSlideshow } from "react-icons/md";
+import { MdCalendarMonth } from "react-icons/md";
 
 export type SalaCardProps = {
   numeroSala: string;
@@ -47,7 +47,7 @@ const SalaCard = ({
         </div>
 
         <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-          <MdSlideshow className="text-gray-400" />
+          <MdCalendarMonth className="text-gray-400" />
           <div className="flex flex-col gap-1">
             {horariosDisponiveis.length > 0 ? (
               horariosDisponiveis.map((horario, index) => (
