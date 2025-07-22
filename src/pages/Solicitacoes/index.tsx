@@ -3,77 +3,96 @@ import Table from "../../components/table";
 import { useState } from "react";
 import TablePagination from "../../components/tablePagination";
 import ModalJustificativaRecusa from "../../modals/modalJustificativaRecusa";
+import { toast } from "react-toastify";
 
 const solicitacoes = [
   {
     id: 1,
-    sala: "Sala 1",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 14:00",
-    solicitante: "Maria Souza",
+    sala: "Sala 01",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "10:00 -> 12:00",
+    solicitante: "Thiago Iachiley",
   },
   {
     id: 2,
-    sala: "Sala 2",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 15:30",
-    solicitante: "João Silva",
+    sala: "Sala 02",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "08:00 -> 10:00",
+    solicitante: "Jarbas Joaci",
   },
   {
     id: 3,
-    sala: "Sala 3",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 09:45",
-    solicitante: "Carlos Lima",
+    sala: "Sala 03",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "13:30 -> 15:30",
+    solicitante: "Fernando Rodrigues",
   },
   {
     id: 4,
-    sala: "Sala 4",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 10:00",
-    solicitante: "Ana Paula",
+    sala: "Sala 04",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "08:00 -> 10:00",
+    solicitante: "Jermana Lopes",
   },
   {
     id: 5,
-    sala: "Sala 5",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 11:15",
-    solicitante: "Bruno Medeiros",
+    sala: "Sala 05",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "08:00 -> 10:00",
+    solicitante: "Rui Vigeli",
   },
   {
     id: 6,
-    sala: "Sala 6",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 13:00",
-    solicitante: "Fernanda Dias",
+    sala: "Sala 06",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Nilena Brito",
   },
   {
     id: 7,
-    sala: "Sala 7",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 13:00",
-    solicitante: "Fernanda Dias",
+    sala: "Sala 07",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Fernando Rodrigues",
   },
   {
     id: 8,
-    sala: "Sala 8",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 13:00",
-    solicitante: "Fernanda Dias",
+    sala: "Sala 08",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Fernando Rodrigues",
   },
   {
     id: 9,
-    sala: "Sala 9",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 13:00",
-    solicitante: "Fernanda Dias",
+    sala: "Sala 09",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Fernando Rodrigues",
   },
   {
     id: 10,
     sala: "Sala 10",
-    local: "Bloco engenharias",
-    horario: "2025-07-21 13:00",
-    solicitante: "Fernanda Dias",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Fernando Rodrigues",
+  },
+  {
+    id: 11,
+    sala: "Sala 11",
+    local: "Bloco das engenharias",
+    data: "21/07/2025",
+    horario: "15:30 -> 17:30",
+    solicitante: "Fernando Rodrigues",
   },
 ];
 
@@ -108,10 +127,13 @@ const Solicitacoes = () => {
             Local da sala
           </Table.Header.Coluna>
           <Table.Header.Coluna alignText="text-center">
-            Horário da solicitação
+            Data solicitada
           </Table.Header.Coluna>
           <Table.Header.Coluna alignText="text-center">
-            Quem solicitou
+            Horário solicitado
+          </Table.Header.Coluna>
+          <Table.Header.Coluna alignText="text-center">
+            Requerente
           </Table.Header.Coluna>
           <Table.Header.Coluna alignText="text-center">
             Aceitar/Rejeitar
@@ -140,6 +162,10 @@ const Solicitacoes = () => {
                 </Table.Body.Linha.Coluna>
 
                 <Table.Body.Linha.Coluna alignText="text-center">
+                  {item.data}
+                </Table.Body.Linha.Coluna>
+
+                <Table.Body.Linha.Coluna alignText="text-center">
                   {item.horario}
                 </Table.Body.Linha.Coluna>
 
@@ -149,12 +175,18 @@ const Solicitacoes = () => {
 
                 <Table.Body.Linha.Coluna alignText="text-center">
                   <div className="flex justify-center gap-2">
-                    <button className="border rounded-lg border-gray-200 p-1 text-green-600 hover:text-white hover:bg-green-600">
+                    <button
+                      onClick={() => {
+                        toast.success("Solicitação aceita!");
+                      }}
+                      className="border rounded-lg border-gray-200 p-1 text-green-600 hover:text-white hover:bg-green-600"
+                    >
                       <CheckCheck size={18} />
                     </button>
                     <ModalJustificativaRecusa
                       onConfirm={(justificativa) => {
                         console.log("Justificativa enviada:", justificativa);
+                        toast.success("Solicitação recusada!");
                       }}
                       trigger={
                         <button className="border rounded-lg border-gray-200 p-1 text-red-600 hover:text-white hover:bg-red-600">

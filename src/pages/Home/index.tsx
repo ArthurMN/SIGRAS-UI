@@ -1,6 +1,6 @@
 import brasao from "../../assets/brasao3_horizontal_branco.svg";
 import SearchBar from "../../components/searchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SalaCard, { type SalaCardProps } from "../../templates/SalaCard";
 import ModalAgendamento from "../../modals/modalAgendamento";
 
@@ -9,42 +9,77 @@ const salas: SalaCardProps[] = [
     numeroSala: "01",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Disponível à tarde",
+    horariosDisponiveis: ["08:00-10:00", "13:30-15:30"],
     status: "disponível",
   },
   {
     numeroSala: "02",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Ocupada até 16h",
+    horariosDisponiveis: [],
     status: "ocupada",
   },
   {
     numeroSala: "03",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Disponível manhã",
+    horariosDisponiveis: ["08:00-10:00", "10:00-12:00"],
     status: "disponível",
   },
   {
     numeroSala: "04",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Ocupada o dia todo",
+    horariosDisponiveis: [],
     status: "ocupada",
   },
   {
     numeroSala: "05",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Disponível agora",
+    horariosDisponiveis: ["13:30-15:30", "15:30-17:30"],
     status: "disponível",
   },
   {
     numeroSala: "06",
     nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Disponível à noite",
+    horariosDisponiveis: ["18:00-20:00"],
+    status: "disponível",
+  },
+  {
+    numeroSala: "07",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
+    horariosDisponiveis: ["18:00-20:00"],
+    status: "disponível",
+  },
+  {
+    numeroSala: "08",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
+    horariosDisponiveis: ["18:00-20:00"],
+    status: "disponível",
+  },
+  {
+    numeroSala: "09",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
+    horariosDisponiveis: ["18:00-20:00"],
+    status: "disponível",
+  },
+  {
+    numeroSala: "10",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
+    horariosDisponiveis: ["18:00-20:00"],
+    status: "disponível",
+  },
+  {
+    numeroSala: "11",
+    nomeBloco: "Bloco das engenharias",
+    capacidade: 50,
+    horariosDisponiveis: ["18:00-20:00"],
     status: "disponível",
   },
 ];
@@ -56,6 +91,7 @@ const Home = () => {
 
   const [selectedSala, setSelectedSala] = useState<SalaCardProps | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [usuarioLogado, setUsuarioLogado] = useState(false);
 
   const salasFiltradas = salas.filter((sala) => {
     if (activeTab === "disponiveis") return sala.status === "disponível";
@@ -77,10 +113,12 @@ const Home = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedSala(null);
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("@admin_Token");
+    if (token) {
+      setUsuarioLogado(true);
+    }
+  }, []);
 
   return (
     <div className="pb-28">
@@ -111,7 +149,7 @@ const Home = () => {
           ].map((tab) => (
             <button
               key={tab.id}
-              className={`pb-2 border-b-4 transition-all duration-200 ${
+              className={`pb-2 hover:cursor-pointer border-b-4 transition-all duration-200 ${
                 activeTab === tab.id
                   ? "border-primary text-gray-950 font-medium text-sm"
                   : "border-transparent text-gray-500 hover:text-gray-700 text-sm"
@@ -128,6 +166,7 @@ const Home = () => {
               key={index}
               {...sala}
               onClick={() => handleAgendar(sala)}
+              usuarioLogado={usuarioLogado}
             />
           ))}
         </div>

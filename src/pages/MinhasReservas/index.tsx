@@ -3,17 +3,17 @@ import SalaReservaCard, { type SalaReservaCardProps } from "../../templates/Sala
 const salas: SalaReservaCardProps[] = [
   {
     numeroSala: "02",
-    nomeBloco: "Bloco de odontologia",
+    nomeBloco: "Bloco das engenharias",
     capacidade: 50,
-    disponibilidade: "Slideshow disponível",
+    data: "21/07/2025",
     status: true,
     horario: "13:30 -> 15:30"
   },
   {
     numeroSala: "03",
-    nomeBloco: "B",
+    nomeBloco: "Bloco das engenharias",
     capacidade: 40,
-    disponibilidade: "Slideshow indisponível",
+    data: "22/07/2025",
     status: false,
     horario: "15:30 -> 17:30"
   },

@@ -19,7 +19,7 @@ const NotificacaoPopover = ({ notificacoes }: NotificacaoPopoverProps) => {
       <Popover.Trigger asChild>
         <button
           type="button"
-          className="p-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+          className="p-2 border border-gray-300 rounded-lg hover:bg-gray-100 hover:cursor-pointer transition"
           title="Notificações"
         >
           <FiBell className="w-4 h-4 text-gray-600" />
@@ -68,7 +68,7 @@ const NotificacaoPopover = ({ notificacoes }: NotificacaoPopoverProps) => {
             )}
           </div>
 
-          <div className="px-4">
+          {/* <div className="px-4">
             <button
               className="text-xs text-white px-4 py-2 bg-primary rounded-lg hover:underline transition"
               onClick={() => {
@@ -77,7 +77,7 @@ const NotificacaoPopover = ({ notificacoes }: NotificacaoPopoverProps) => {
             >
               Ver todas
             </button>
-          </div>
+          </div> */}
 
           <Popover.Arrow className="fill-white" />
         </Popover.Content>

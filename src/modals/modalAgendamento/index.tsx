@@ -40,7 +40,7 @@ const ModalAgendamento = ({
                 Sala selecionada
               </label>
               <div className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100 text-gray-600">
-                <p>{`${sala.numeroSala} - Bloco ${sala.nomeBloco}`}</p>
+                <p>{`${sala.numeroSala} - ${sala.nomeBloco}`}</p>
               </div>
             </div>
 

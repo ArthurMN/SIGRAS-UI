@@ -101,8 +101,8 @@ const InputText = (props: propsField & propsInput): JSX.Element => {
             if (type != "number") {
               const positionCursor = e.target.selectionStart;
 
-              if (!lowercase)
-                e.target.value = e.target.value.toString().toUpperCase();
+              // if (!lowercase)
+              //   e.target.value = e.target.value.toString().toUpperCase();
 
               if (
                 type == "number" &&

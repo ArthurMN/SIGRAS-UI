@@ -3,16 +3,22 @@ import brasao from "../../assets/brasao3_horizontal_branco.svg";
 import { useState } from "react";
 import { CiCircleAlert, CiCircleCheck } from "react-icons/ci";
 import { useForm } from "react-hook-form";
+import { definirSenha, login } from "../../services/auth";
+import type { LoginResponse, LoginType } from "../../types/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type FormData = {
   email: string;
-  senha: string;
+  password: string;
   novaSenha?: string;
   confirmarSenha?: string;
 };
 
 const Login = () => {
   const [primeiroAcesso, setPrimeiroAcesso] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number | null>(null);
+  const navigate = useNavigate();
   const {
     // control,
     handleSubmit,
@@ -23,7 +29,7 @@ const Login = () => {
   } = useForm<FormData>({
     defaultValues: {
       email: "",
-      senha: "",
+      password: "",
       novaSenha: "",
       confirmarSenha: "",
     },
@@ -31,27 +37,64 @@ const Login = () => {
 
   const novaSenha = watch("novaSenha");
   const confirmarSenha = watch("confirmarSenha");
-
   const senhaValida = (novaSenha?.length ?? 0) >= 8;
   const confirmacaoValida = novaSenha === confirmarSenha && senhaValida;
   const contemNumero = /\d/.test(novaSenha || "");
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     if (!primeiroAcesso) {
-      console.log("Enviando login:", data.email, data.senha);
-      const retornoApi = { primeiroAcesso: true };
-
-      if (retornoApi.primeiroAcesso) {
-        setPrimeiroAcesso(true);
-        reset({
+      try {
+        const payload: LoginType = {
           email: data.email,
-          senha: data.senha,
-          novaSenha: "",
-          confirmarSenha: "",
-        });
+          password: data.password,
+        };
+
+        const response: LoginResponse = await login(payload);
+
+        if (response.token) {
+          localStorage.setItem("@admin_Token", response.token);
+          localStorage.setItem("@user_id", response.user.id.toString());
+          localStorage.setItem("@user_role", response.user.role);
+          localStorage.setItem("@user_name", response.user.name);
+
+          if (response.user.must_change_password) {
+            setUserId(response.user.id);
+            setPrimeiroAcesso(true);
+            reset({
+              email: data.email,
+              password: "",
+              novaSenha: "",
+              confirmarSenha: "",
+            });
+            toast.info("Defina sua senha para continuar.");
+          } else {
+            toast.success("Login realizado com sucesso!");
+            navigate("/");
+          }
+        } else {
+          toast.error("Usuário ou senha inválidos.");
+        }
+      } catch (error) {
+        toast.error("Erro ao tentar logar.");
       }
     } else {
-      console.log("Cadastrando nova senha:", novaSenha);
+      if (confirmacaoValida && userId !== null) {
+        try {
+          await definirSenha({
+            user_id: userId,
+            password: data.novaSenha!,
+            password_confirmation: data.confirmarSenha!,
+          });
+
+          toast.success("Senha definida com sucesso!");
+          setPrimeiroAcesso(false);
+          setUserId(null);
+          reset();
+          navigate("/");
+        } catch (error) {
+          toast.error("Erro ao definir nova senha.");
+        }
+      }
     }
   };
 
@@ -83,14 +126,16 @@ const Login = () => {
                 label="Email"
                 opcional
                 placeholder="Digite seu email"
+                lowercase
                 type="email"
                 register={register}
               />
 
               <Formulario.InputText
-                name="senha"
+                name="password"
                 label="Senha"
                 opcional
+                lowercase
                 placeholder="Digite sua senha"
                 type="password"
                 register={register}
